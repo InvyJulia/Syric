@@ -29,11 +29,13 @@ public class WebDriverUtils {
 	}
 
 	//TODO: revert to PRIVATE!
-	public static WebDriver getDriver(String driverType){
+	private static WebDriver getDriver(String driverType){
 		if (driver == null) {
 			switch (driverType) {
-				case "firefox":	driver = new FirefoxDriver(); break;
-				case "chrome": driver = new ChromeDriver(); break;
+				case "firefox":	driver = new FirefoxDriver();
+					driver.manage().window().maximize(); break;
+				case "chrome": driver = new ChromeDriver();
+					driver.manage().window().maximize(); break;
 				case "internet explorer": driver = new InternetExplorerDriver(); break;
 					
 				default: throw new RuntimeException();
