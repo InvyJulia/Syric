@@ -16,12 +16,13 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 public class WebDriverUtils {
 
 	private static WebDriver driver;
+	public static String driverType;
 	
 //	private WebDriverUtils(){
 //	}
 	
-	public static void start(String driverType) {
-		getDriver(driverType);
+	public static void start() {
+		getDriver();
 	}
 
 	public static void stop() {
@@ -29,16 +30,16 @@ public class WebDriverUtils {
 	}
 
 	//TODO: revert to PRIVATE!
-	private static WebDriver getDriver(String driverType){
+	private static WebDriver getDriver(){
 		if (driver == null) {
 			switch (driverType) {
-				case "firefox":	driver = new FirefoxDriver();
-					driver.manage().window().maximize(); break;
-				case "chrome": driver = new ChromeDriver();
-					driver.manage().window().maximize(); break;
-				case "internet explorer": driver = new InternetExplorerDriver(); break;
-					
-				default: throw new RuntimeException();
+			case "firefox":	driver = new FirefoxDriver();
+				driver.manage().window().maximize(); break;
+			case "chrome": driver = new ChromeDriver();
+				driver.manage().window().maximize(); break;
+			case "internet explorer": driver = new InternetExplorerDriver(); break;
+				
+			default: throw new RuntimeException();
 			}
 		}
 		return driver;
