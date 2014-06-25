@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
@@ -46,11 +47,17 @@ public class WebDriverUtils {
 			String browser = getBrowserType(); 
 			
 			switch (browser) {
-			case "firefoxf":	driver = new FirefoxDriver();
+			case "firefox": 
+				driver = new FirefoxDriver();
 				driver.manage().window().maximize(); break;
-			case "chrome": driver = new ChromeDriver();
+			case "chrome": 
+				ChromeOptions chromeOptions = new ChromeOptions();
+				chromeOptions.addArguments("test-type");
+				chromeOptions.addArguments("start-maximized");
+				driver = new ChromeDriver(chromeOptions);
 				driver.manage().window().maximize(); break;
-			case "iexplorer": driver = new InternetExplorerDriver(); break;
+			case "iexplorer": 
+				driver = new InternetExplorerDriver(); break;
 			default: throw new RuntimeException();
 			}
 		}
