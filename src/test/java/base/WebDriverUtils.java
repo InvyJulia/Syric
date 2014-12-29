@@ -3,7 +3,12 @@
  * 
  */
 package test.java.base;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,7 +21,13 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 public class WebDriverUtils {
 	
 	private static WebDriver driver;
-	
+	private static String browserType;
+
+
+	static {
+		loadConfigProperties();
+		browserType = getBrowserType();
+	}
 	
 	private WebDriverUtils(){
 	}
@@ -44,9 +55,7 @@ public class WebDriverUtils {
 	
 	private static WebDriver getDriver(){
 		if (driver == null) {
-			String browser = getBrowserType(); 
-			
-			switch (browser) {
+			switch (browserType) {
 			case "firefox": 
 				driver = new FirefoxDriver();
 				driver.manage().window().maximize(); break;
@@ -64,16 +73,28 @@ public class WebDriverUtils {
 		return driver;
 	}
 
-	//TODO fetch args accurately
+	private static void loadConfigProperties() {
+		Properties driverProperties = new Properties();
+		String driverPropertiesFileName = "config.properties";
+		try {
+			InputStream stream = new BufferedInputStream(new FileInputStream(
+					driverPropertiesFileName));
+			driverProperties.load(stream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		System.setProperty("webdriver.chrome.driver",
+				driverProperties.get("chromedriverpath").toString());
+		System.setProperty("webdriver.ie.driver",
+				driverProperties.get("iedriverpath").toString());
+	}
+
 	private static String getBrowserType(){
 		String browser = "";
-		String[] properties = System.getProperties()
-				.values().toString().split(" ");
-		for (String string : properties) {
-			if (string.contains("browser")){
-				browser = string.substring(string.indexOf("=")+1, string.length());
-			}
-		}
+
+		browser = System.getProperty("browser");
+		System.out.println("Starting Selenium on " + browser);
 		return browser;
 	}
 	

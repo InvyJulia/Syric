@@ -15,5 +15,5 @@ public class GoogleSuite extends TestBase{
 	public void googleHomeTest(){
 		new GoogleHomeTest().searchVerification();
 	}
-	
+
 }
