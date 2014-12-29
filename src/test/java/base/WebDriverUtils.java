@@ -2,7 +2,7 @@
  * @author invy
  * 
  */
-package base;
+package test.java.base;
 import java.util.List;
 
 import org.openqa.selenium.By;

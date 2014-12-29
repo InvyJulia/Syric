@@ -2,7 +2,7 @@
  * @author invy
  * 
  */
-package base;
+package test.java.base;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

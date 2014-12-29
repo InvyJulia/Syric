@@ -1,11 +1,11 @@
-package pages;
+package test.java.pages;
 
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import base.WebDriverUtils;
+import test.java.base.WebDriverUtils;
 
 public class GoogleHomePage {
 
