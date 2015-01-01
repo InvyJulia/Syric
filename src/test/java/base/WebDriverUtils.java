@@ -3,16 +3,11 @@
  * 
  */
 package base;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 import java.util.Properties;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -28,7 +23,7 @@ public class WebDriverUtils {
 
 	static {
 		loadConfigProperties();
-		browserType = getBrowserType();
+		browserType = fetchBrowserType();
 	}
 	
 	private WebDriverUtils(){
@@ -57,7 +52,15 @@ public class WebDriverUtils {
 	public static void waitForElementVisible(By by){
 		new WebDriverWait(getDriver(), 20).until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
-	
+
+	public static File takeScreenshot(){
+		return ((TakesScreenshot)getDriver()).getScreenshotAs(OutputType.FILE);
+	}
+
+	public static String getBrowserType(){
+		return browserType;
+	}
+
 	private static WebDriver getDriver(){
 		if (driver == null) {
 			switch (browserType) {
@@ -95,7 +98,7 @@ public class WebDriverUtils {
 				driverProperties.get("iedriverpath").toString());
 	}
 
-	private static String getBrowserType(){
+	private static String fetchBrowserType(){
 		String browser = System.getProperty("browser");
 		System.out.println("Starting Selenium on " + browser);
 		return browser;

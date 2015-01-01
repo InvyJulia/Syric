@@ -3,6 +3,7 @@
  */
 package suites;
 
+import org.fest.swing.annotation.GUITest;
 import org.junit.Test;
 
 import base.TestBase;
