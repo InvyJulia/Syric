@@ -1,13 +1,13 @@
 /**
  * @author invy
  */
-package test.java.tests;
+package tests;
 
 import org.junit.Assert;
 
-import test.java.pages.GoogleHomePage;
-import test.java.base.WebDriverUtils;
-import test.java.data.GoogleHomeData;
+import pages.GoogleHomePage;
+import base.WebDriverUtils;
+import data.GoogleHomeData;
 
 public class GoogleHomeTest{
 	

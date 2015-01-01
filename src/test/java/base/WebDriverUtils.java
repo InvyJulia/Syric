@@ -2,7 +2,7 @@
  * @author invy
  * 
  */
-package test.java.base;
+package base;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,6 +17,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WebDriverUtils {
 	
@@ -51,7 +53,10 @@ public class WebDriverUtils {
 	public static void navigate(String url){
 		driver.get(url);
 	}
-	
+
+	public static void waitForElementVisible(By by){
+		new WebDriverWait(getDriver(), 20).until(ExpectedConditions.visibilityOfElementLocated(by));
+	}
 	
 	private static WebDriver getDriver(){
 		if (driver == null) {
@@ -91,9 +96,7 @@ public class WebDriverUtils {
 	}
 
 	private static String getBrowserType(){
-		String browser = "";
-
-		browser = System.getProperty("browser");
+		String browser = System.getProperty("browser");
 		System.out.println("Starting Selenium on " + browser);
 		return browser;
 	}

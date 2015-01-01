@@ -1,12 +1,12 @@
 /**
  * @author invy
  */
-package test.java.suites;
+package suites;
 
 import org.junit.Test;
 
-import test.java.base.TestBase;
-import test.java.tests.GoogleHomeTest;
+import base.TestBase;
+import tests.GoogleHomeTest;
 
 public class GoogleSuite extends TestBase{
 

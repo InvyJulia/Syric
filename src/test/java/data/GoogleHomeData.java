@@ -1,4 +1,4 @@
-package test.java.data;
+package data;
 
 public class GoogleHomeData {
 	
