@@ -15,12 +15,11 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TestBase {
-
-	private Date dateOfRun; //TODO: implement Date fetching
-
 
 	@BeforeClass
 	public static void setup(){
@@ -36,24 +35,32 @@ public class TestBase {
 	public TestRule watcher = new TestWatcher() {
 		@Override
 		public void finished(Description description) {
+			saveScreenshotAsFile(description, "passed");
 			tearDown();
 		}
 
 		@Override
 		public void failed(Throwable e, Description description) {
-			try {
-				File screenshot = WebDriverUtils.takeScreenshot();
-
-				String filePathRoot = ".\\screenshots\\" + WebDriverUtils.getBrowserType() + "\\" + dateOfRun + "\\";
-				String fullFilePath = filePathRoot + description.getClassName() + "\\" + description.getMethodName() + ".jpg";
-
-				FileUtils.copyFile(screenshot, new File(fullFilePath));
-			} catch(Exception ex) {
-				System.out.println(ex.toString());
-				System.out.println(ex.getMessage());
-			}
-
+			saveScreenshotAsFile(description, "failed");
 			tearDown();
 		}
 	};
+
+	private void saveScreenshotAsFile(Description description, String result) {
+		try {
+            File screenshot = WebDriverUtils.takeScreenshot();
+            String filePathRoot = ".\\screenshots\\" + WebDriverUtils.getBrowserType() + "\\"
+					+ WebDriverUtils.BUILD_START_DATE_TIME + "\\"
+					+ description.getClassName().substring(description.getClassName().indexOf(".") + 1) + "\\";
+
+            String fullFilePath = filePathRoot + result + " " + WebDriverUtils.getDateAndTime()
+					+  " - " + description.getMethodName() + ".jpg";
+
+            FileUtils.copyFile(screenshot, new File(fullFilePath));
+        } catch(Exception ex) {
+            System.out.println(ex.toString());
+            System.out.println(ex.getMessage());
+        }
+	}
+
 }

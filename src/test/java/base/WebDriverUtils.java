@@ -4,6 +4,9 @@
  */
 package base;
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -19,11 +22,13 @@ public class WebDriverUtils {
 	
 	private static WebDriver driver;
 	private static String browserType;
+	public static final String BUILD_START_DATE_TIME;
 
 
 	static {
 		loadConfigProperties();
 		browserType = fetchBrowserType();
+		BUILD_START_DATE_TIME = getDateAndTime();
 	}
 	
 	private WebDriverUtils(){
@@ -59,6 +64,13 @@ public class WebDriverUtils {
 
 	public static String getBrowserType(){
 		return browserType;
+	}
+
+	public static String getDateAndTime(){
+		DateFormat dateFormat = new SimpleDateFormat("MMM,dd yyy  HH_mm_ss");
+		Date date = new Date();
+
+		return dateFormat.format(date);
 	}
 
 	private static WebDriver getDriver(){
