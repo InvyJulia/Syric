@@ -3,10 +3,8 @@
  */
 package suites;
 
-import org.fest.swing.annotation.GUITest;
-import org.junit.Test;
-
 import base.TestBase;
+import org.junit.Test;
 import tests.GoogleHomeTest;
 
 public class GoogleSuite extends TestBase{
