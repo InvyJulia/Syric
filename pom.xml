@@ -97,9 +97,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.easytesting</groupId>
-            <artifactId>fest-swing-junit-4.5</artifactId>
-            <version>1.2.1</version>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>2.44.0</version>
         </dependency>
     </dependencies>
 </project>
