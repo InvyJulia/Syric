@@ -3,31 +3,34 @@
  * 
  */
 package base;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 public class WebDriverUtils {
 	
+	public static final String BUILD_START_DATE_TIME;
 	private static WebDriver driver;
 	private static String browserType;
-	public static final String BUILD_START_DATE_TIME;
+	private static String browserVersion;
+	private static String HUB_URL;
 
 
 	static {
 		loadConfigProperties();
-		browserType = fetchBrowserType();
+//		fetchBrowserType();
 		BUILD_START_DATE_TIME = getDateAndTime();
 	}
 	
@@ -73,25 +76,24 @@ public class WebDriverUtils {
 		return dateFormat.format(date);
 	}
 
-	private static WebDriver getDriver(){
+	private static final WebDriver getDriver() {
 		if (driver == null) {
-			switch (browserType) {
-			case "firefox": 
-				driver = new FirefoxDriver();
-				driver.manage().window().maximize(); break;
-			case "chrome": 
-				ChromeOptions chromeOptions = new ChromeOptions();
-				chromeOptions.addArguments("test-type");
-				chromeOptions.addArguments("start-maximized");
-				driver = new ChromeDriver(chromeOptions);
-				driver.manage().window().maximize(); break;
-			case "iexplorer": 
-				driver = new InternetExplorerDriver(); break;
-			default: throw new RuntimeException();
+//			DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+//
+//			desiredCapabilities.setBrowserName(browserType);
+//			desiredCapabilities.setPlatform(Platform.VISTA);
+//			desiredCapabilities.setVersion(browserVersion);
+//			desiredCapabilities.setCapability("ignoreProtectedModeSettings", true);
+			try {
+				driver = new RemoteWebDriver(new URL(HUB_URL), DesiredCapabilities.chrome());
+			} catch (MalformedURLException e) {
+				System.out.println("Hub url is not correct. Read url from config is: \"" + HUB_URL + "\"");
 			}
 		}
 		return driver;
 	}
+
+
 
 	private static void loadConfigProperties() {
 		Properties driverProperties = new Properties();
@@ -106,14 +108,18 @@ public class WebDriverUtils {
 
 		System.setProperty("webdriver.chrome.driver",
 				driverProperties.get("chromedriverpath").toString());
-		System.setProperty("webdriver.ie.driver",
-				driverProperties.get("iedriverpath").toString());
+		System.out.println("webdriver.chrome.driver is set to: " + driverProperties.get("chromedriverpath").toString());
+				System.setProperty("webdriver.ie.driver", driverProperties.get("iedriverpath").toString());
+		System.out.println("webdriver.ie.driver is set to: " + driverProperties.get("iedriverpath").toString());
+		HUB_URL = driverProperties.get("huburl").toString();
 	}
 
-	private static String fetchBrowserType(){
-		String browser = System.getProperty("browser");
-		System.out.println("Starting Selenium on " + browser);
-		return browser;
+	private static void fetchBrowserType() {
+		//		browserType = System.getProperty("browser");
+		//		browserVersion = System.getProperty("version");
+
+		System.out.println("Starting Selenium on Browser." + browserType
+				+ " Platform." + Platform.VISTA.toString() + " Version." + browserVersion + "...");
 	}
 	
 }
