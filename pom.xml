@@ -34,6 +34,9 @@
                 <version>2.12.4</version>
                 <configuration>
                     <skip>true</skip>
+                    <parallel>methods</parallel>
+                    <forkMode>perthread</forkMode>
+                    <threadCount>4</threadCount>
                 </configuration>
                 <!--<executions>
                     <execution>
