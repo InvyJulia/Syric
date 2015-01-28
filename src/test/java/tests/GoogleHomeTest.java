@@ -11,14 +11,14 @@ import data.GoogleHomeData;
 
 public class GoogleHomeTest{
 	
-	public void searchVerification(){
+	public void searchVerification(String searchFor){
 		WebDriverUtils.navigate(GoogleHomeData.HOME_PAGE_URL);
 		GoogleHomePage homePage = new GoogleHomePage();
 		
-		homePage.searchQuery(GoogleHomeData.QUERY).waitUntilDivVisible();
+		homePage.searchQuery(searchFor).waitUntilDivVisible();
 //			.fetchAndPrintSearchResults();
-		Assert.assertTrue("Search results do not contain '" + GoogleHomeData.QUERY + "' phrase",
-				homePage.verifyQueryPresence(GoogleHomeData.QUERY));
+		Assert.assertTrue("Search results do not contain '" + searchFor+ "' phrase",
+				homePage.verifyQueryPresence(searchFor));
 	}
 
 }

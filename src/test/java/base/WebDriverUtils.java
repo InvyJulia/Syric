@@ -38,7 +38,12 @@ public class WebDriverUtils {
 	}
 	
 	public static void start() {
-		getDriver();
+//		getDriver();
+		try {
+			driver = new RemoteWebDriver(new URL(HUB_URL), DesiredCapabilities.chrome());
+		} catch (MalformedURLException e) {
+			System.out.println("Hub url is not correct. Read url from config is: \"" + HUB_URL + "\"");
+		}
 	}
 
 	public static void stop() {
